@@ -1,0 +1,169 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Shopping Dashboard</title>
+        
+        <!-- Bootstrap Start -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- Bootstrap End -->
+
+        <!-- DataTables Start -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+        <script>
+                $(document).ready( function () {
+                    $('#myTable').DataTable();
+                } );
+        </script>
+        <!-- DataTables End -->
+        
+    </head>
+    <style>
+        body{
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .form-control {
+            display: block;
+            width: 50%;
+            height: calc(1.5em + .75rem + 2px);
+            padding: .375rem .75rem;
+            margin: 10px 166px;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+            text-align: center;
+        }
+    </style>
+    <body>
+
+    <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/admin/userDashboard">User List </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/shoppingDashboard">Shopping List </a>
+                    </li> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/logout">Log Out </a>
+                    </li>               
+                </ul>
+            </div>
+        </nav>
+    <div class="alert alert-success" role="alert">
+        <h5>Name  : <%= user.name %>,  </h5>
+        <h5>Role  : <%= user.role %>,  </h5>
+        <h5>Email : <%= user.email %>  </h5>
+    </div>
+    
+    <div class="row">
+        <!--/col-6-->
+        <div class="col-md-6"> 
+        <div class="panel">
+        <div class="panel-body">
+                <h5 style="text-align: center;">Add User</h5>
+             <div class="panel panel-info">
+                <div class="panel-body">
+                    <form action="/admin/addUser" method="POST">
+                        <div class="form-group">
+                            <label for="name" >Name</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Enter Your Name" />
+  
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter Your Email"/>
+ 
+                            <label for="password" >Password</label>
+                            <input type="text" id="password" name="password" class="form-control" placeholder="Enter Your Password" />
+                        </div>
+                        <div class="form-group">
+                                <label for="role">Choose Role</label>
+                                <select  class="form-control" id="role" name="role">
+                                <option selected style="text-align: center;">--Select option--</option>
+                                  <option>Admin</option>
+                                  <option>Normal</option>
+                                </select>
+                              </div>
+                        <hr />
+                        <center>
+                                <button type="submit" class="btn btn-info">Add User</button>
+                                <button type="reset" class="btn btn-warning">Reset</button>
+                        </center>
+                        <hr />
+                        <div class="alert alert-info" role="alert">
+                            <%=msg%>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>                              
+        </div>
+        <!--/col-6-->
+        
+        <div class="col-md-6"> 
+        <div class="panel">
+        <div class="panel-body">
+            
+        <!-- User List START -->
+        <div class="panel panel-primary">
+                <h1 style="text-align: center;" class="panel-heading">
+                    Dashboard - User List
+                </h1>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped" id="myTable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                                <% for(var i=0; i<data.length; i++) { %>
+                                    <tr>
+                                        <td><%= data[i].name %></td>
+                                        <td><%= data[i].role %></td>
+                                        <td><%= data[i].email %></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        <tfoot class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- User List END -->
+            
+        </div>
+        </div>                              
+        </div>
+        
+        <!--/col-6-->
+    </div>
+    </div>
+    <script>
+        // class selector
+        const message = $('.alert.alert-info')
+        if ( message.length ) setTimeout( () => {message.fadeOut( 'slow' );}, 3000 );
+    </script>
+    </body>
+</html>
